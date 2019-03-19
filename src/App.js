@@ -5,22 +5,22 @@ import ArticleList from './components/ArticleList';
 
 class App extends Component {
 
-  componentDidMount() {
-  }
+    componentDidMount() {
+    }
 
-  render() {
-    return (
-        <div className="App">
-            <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo" />
-                <h1 className="App-title">Welcome to React</h1>
-            </header>
-            <br />
-            <ArticleList/>
-        </div>
-    );
+    render() {
+        return (
+            <div className="App">
+                <header className="App-header">
+                    <img src={logo} className="App-logo" alt="logo" />
+                    <h1 className="App-title">Welcome to React</h1>
+                </header>
+                <br />
+                <ArticleList/>
+            </div>
+        );
 
-  }
+    }
 }
 
 export default App;
