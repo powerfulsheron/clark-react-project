@@ -4,8 +4,6 @@ import clark from './images/Logo.svg';
 import {Container,Row,Col} from 'react-bootstrap';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import Button from '@material-ui/core/Button';
 
 class App extends Component {
@@ -31,7 +29,8 @@ class App extends Component {
                     <Grid item xs={1}>
                         <Button variant="contained" style={{
                             backgroundColor: "#5CABCC",
-                            color:"white"
+                            color:"white",
+                            borderRadius:"30px"
                         }}>
                             Register
                         </Button>
@@ -39,7 +38,8 @@ class App extends Component {
                     <Grid item xs={1}>
                         <Button variant="contained" style={{
                             backgroundColor: "#44D7B6",
-                            color:"white"
+                            color:"white",
+                            borderRadius:"30px"
                         }}>
                             Login
                         </Button>
@@ -102,7 +102,8 @@ class App extends Component {
                     <Col>
                         <Button variant="contained" className="primary" style={{
                             backgroundColor: "#6995d7",
-                            color:"white"
+                            color:"white",
+                            borderRadius:"30px"
                         }}>
                             Essayez gratuitement
                         </Button>
@@ -123,7 +124,7 @@ class App extends Component {
                 <Grid container spacing={20}>
                     <Grid item xs={1}>
                     </Grid>
-                    <Grid item xs>
+                    <Grid item xs={3}>
                         <h1 className="lpheader">Interpretation</h1>
                         <label className="lppara">Des datas sous forme de bubble chart, en fonction de la position d'un mot dans son reférencement</label>
                     </Grid>
@@ -131,18 +132,40 @@ class App extends Component {
                     </Grid>
                     <Grid item xs>
                     </Grid>
+                    <Grid item xs>
+                        <img src={require("./images/Loupe-Animated.gif")} alt="loading..." height="225" width="420"></img>
+                    </Grid>
+                    <Grid item xs={1}>
+                    </Grid>
+                </Grid>
+                <Grid>
+                    <br></br>
+                </Grid>
+                <Grid>
+                    <br></br>
+                </Grid>
+                <Grid>
+                    <br></br>
                 </Grid>
                 <Grid container spacing={20}>
+                    <Grid item xs={1}>
+                    </Grid>
                     <Grid item xs>
+                        <img src={require("./images/Gear-Animated.gif")} alt="loading..." height="225" width="420"></img>
                     </Grid>
                     <Grid item xs>
                     </Grid>
                     <Grid item xs>
+                    </Grid>
+                    <Grid item xs={3}>
                         <h1 className="lpheader">Customisation</h1>
                         <label className="lppara">De la Dataviz en fonction de stratégie souhaitée, avec des paramètres avancés</label>
                     </Grid>
                     <Grid item xs={1}>
                     </Grid>
+                </Grid>
+                <Grid>
+                    <br></br>
                 </Grid>
             </Container>
         </div>
