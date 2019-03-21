@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
+import clark from './img/Logo.svg';
+import profil from './img/profil.png';
+import deco from './img/3-layers.png';
 import './App.css';
 import ArticleList from './components/ArticleList';
 import SearchPage from './components/SearchPage';
 
-class App extends Component {
-
-    componentDidMount() {
-    }
-
+class App extends React.Component {
     render() {
         return (
             <div className="App">
