@@ -4,20 +4,14 @@ import './App.css';
 import axios from 'axios';
 import * as d3 from 'd3';
 import BubbleChart from '@weknow/react-bubble-chart-d3';
+import getArticles from './action/articles';
+import ArticleList from './components/ArticleList';
 
 class App extends Component {
 
-  getArticles = url => {
-    axios.get(url).then(response => console.log(response));
-    };
 
   componentDidMount() {
-    this.getArticles('https://api.ozae.com/gnw/article/142453821?key=8dff35cfd68b48be8dff4c6a2d0fb3ac');
-
-
-
   }
-
 
   render() {
     return (
@@ -62,7 +56,6 @@ class App extends Component {
                 ]}
             />
         </div>
-
     );
 
   }
