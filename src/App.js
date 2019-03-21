@@ -6,6 +6,8 @@ import * as d3 from 'd3';
 import BubbleChart from '@weknow/react-bubble-chart-d3';
 import getArticles from './action/articles';
 import ArticleList from './components/ArticleList';
+import getArticles from './action/articles';
+import ArticleList from './components/ArticleList';
 
 class App extends Component {
 
@@ -22,6 +24,7 @@ class App extends Component {
             </header>
             <h1 className="App-intro">Example of 'react-bubble-chart-d3' Component.</h1>
             <br />
+            <ArticleList/>
             <BubbleChart
                 width={800}
                 height={800}
