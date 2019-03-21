@@ -6,6 +6,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: #fbfbfb;
 }
 
 code {
@@ -15,13 +16,12 @@ code {
 
 .lpLabel{
   color:#494949;
-  font-style: italic;
 }
 
 .lppara{
   color:#494949;
-  font-size: 20px;
-  font-style: italic;
+  font-size: 15px;
+  text-align: left;
 }
 
 .lpheader{
