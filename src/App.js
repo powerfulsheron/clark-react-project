@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import logo from './logo.svg';
+import clark from './img/Logo.svg';
+import profil from './img/profil.png';
+import deco from './img/3-layers.png';
 import './App.css';
 import clark from './images/Logo.svg';
 import {Container,Row,Col} from 'react-bootstrap';
@@ -6,10 +10,7 @@ import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 
-class App extends Component {
-
-  componentDidMount() {
-  }
+class App extends React.Component {
 
   render() {
     return (
