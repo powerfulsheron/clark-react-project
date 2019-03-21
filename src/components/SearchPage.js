@@ -6,8 +6,8 @@ import deco from '../img/3-layers.png';
 import '../App.css';
 import '../style/recherche.css';
 import axios from 'axios';
-import Loader from "react-loader-spinner";
 import BubbleWrapper from "../wrapper/BubbleWrapper";
+import SuperLoader from "./SuperLoader";
 
 
 class SearchPage extends Component {
@@ -20,12 +20,6 @@ class SearchPage extends Component {
 
     };
 
-    getArticles = url => {
-        axios.get(url).then(response => console.log(response)/* this.setState({ngrams: this.processArticlesToNgrams(articles)})*/);
-    };
-    bubbleClick = (label) =>{
-        console.log("Custom bubble click func")
-    }
     // eslint-disable-next-line
     handleChange = () => this.setState({value: event.target.value});
     // eslint-disable-next-line
@@ -77,17 +71,6 @@ class SearchPage extends Component {
                 })
             });
     }
-    // ngramNumber = (valuengrams) => {
-    //     this.setState({
-    //         value: valuengrams,
-    //     });
-    //     console.log(valuengrams);
-    // }
-    // handlechange = (event) => {
-    //     this.setState({
-    //         query: event.target.value
-    //     });
-    // }
 
     componentDidUpdate() {
 
@@ -98,14 +81,6 @@ class SearchPage extends Component {
 
         return (
             <div className="App">
-                {/*<header className="App-header">*/}
-                {/*<img src={logo} className="App-logo" alt="logo" />*/}
-                {/*<h1 className="App-title">Welcome to React</h1>*/}
-                {/*</header>*/}
-                {/*<br />*/}
-                {/*<div>*/}
-                {/*{this.state.ngrams.map((ngram) => <p>{ngram.label}</p>)}*/}
-                {/*</div>*/}
                 <div className="col-left">
                     <img src={deco} alt="Clark" className="deco"/>
                     <div className="deconnexion">Deconnexion</div>
@@ -113,12 +88,7 @@ class SearchPage extends Component {
                         <input className="input-live" type="text" value={this.state.value} onChange={this.handleChange} onKeyPress={this.handleEnter} />
                     </>
                     <div className="Bubble">
-                        {this.state.loader && <Loader
-                            type="Watch"
-                            color="#00BFFF"
-                            height="100"
-                            width="100"
-                        />}
+                        {this.state.loader && <SuperLoader /> }
 
                         {this.state.ngrams && <BubbleWrapper
                             graph= {{
@@ -142,11 +112,10 @@ class SearchPage extends Component {
                     </div>
 
                 </div>
-                <div className="sidebar">
+                {this.state.ngrams && <div className="sidebar">
 
                     <div>
                         <img src={profil} alt="Clark" className="header-logo"/>
-                        {/*<p className="compte">Mon compte</p>*/}
                     </div>
                     <div className="ngrams-choice">
                         <div id="ngrams" >{this.state.nbrKw}</div>
@@ -219,7 +188,7 @@ class SearchPage extends Component {
                             </>
                         </div>
                     </div>
-                </div>
+                </div>}
 
 
             </div>

@@ -1,7 +1,7 @@
 import React from 'react';
 import BubbleWrapper from '../wrapper/BubbleWrapper';
 import axios from 'axios';
-import Loader from 'react-loader-spinner';
+import SuperLoader from './SuperLoader';
 
 class ArticleList extends React.Component {
     state = {
@@ -62,20 +62,11 @@ class ArticleList extends React.Component {
             });
     }
 
-    componentDidUpdate() {
-
-    }
-
     render() {
         return(
             <>
                 <input type="text" value={this.state.value} onChange={this.handleChange} onKeyPress={this.handleEnter} />
-                {this.state.loader && <Loader
-                    type="Watch"
-                    color="#00BFFF"
-                    height="100"
-                    width="100"
-                /> }
+                {this.state.loader && <SuperLoader /> }
                 {this.state.ngrams && <BubbleWrapper data={this.state.ngrams} limit={10}/>}
             </>
         );
