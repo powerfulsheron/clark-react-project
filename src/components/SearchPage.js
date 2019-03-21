@@ -1,45 +1,81 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import clark from './img/Logo.svg';
-import profil from './img/profil.png';
-import deco from './img/3-layers.png';
-import './App.css';
-import './style/recherche.css';
+import logo from '../logo.svg';
+import clark from '../img/Logo.svg';
+import profil from '../img/profil.png';
+import deco from '../img/3-layers.png';
+import '../App.css';
+import '../style/recherche.css';
 import axios from 'axios';
-import BubbleChart from '@weknow/react-bubble-chart-d3';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col'
+import Loader from "react-loader-spinner";
+import BubbleWrapper from "../wrapper/BubbleWrapper";
 
-
-const data = [
-    { label: 'CRM', value: 1,  color: '#ff00ff' },
-    { label: 'API', value: 1 },
-    { label: 'Data', value: 1 },
-    { label: 'Commerce', value: 1 },
-    { label: 'AI', value: 3 },
-    { label: 'Management', value: 5 },
-    { label: 'Testing', value: 6 },
-    { label: 'Mobile', value: 9 },
-    { label: 'Conversion', value: 9 },
-    { label: 'Misc', value: 21 },
-    { label: 'Databases', value: 22 },
-    { label: 'DevOps', value: 22 },
-    { label: 'Javascript', value: 23 },
-
-
-];
 
 class SearchPage extends Component {
     state = {
+        articles: [],
         ngrams: [],
-        valuengrams: 15,
-    }
+        value: '',
+        loader: false,
+        nbrKw: 10,
+
+    };
+
     getArticles = url => {
         axios.get(url).then(response => console.log(response)/* this.setState({ngrams: this.processArticlesToNgrams(articles)})*/);
     };
     bubbleClick = (label) =>{
         console.log("Custom bubble click func")
+    }
+    // eslint-disable-next-line
+    handleChange = () => this.setState({value: event.target.value});
+    // eslint-disable-next-line
+    handleSlide = () => this.setState({nbrKw: event.target.value});
+    handleEnter = e => {
+        if (e.key === 'Enter') {
+            this.findWords(this.state.value);
+        }
+    };
+
+    findWords(word) {
+        this.setState({loader: true});
+        axios.get(`https://api.ozae.com/gnw/articles?date=20160601__20180630&key=cb84c941a9894171b2ac4a934c0c0a51&query=${word}&hard_limit=1000`)
+            .then(response => {
+                this.setState({articles: response.data.articles});
+                const tabGram = [];
+                response.data.articles.map(article => {
+                    axios.get(`https://api.ozae.com/gnw/article/${article.id}/html_content?key=cb84c941a9894171b2ac4a934c0c0a51`)
+                        .then(response => {
+                            const text = response.data.replace(/(\b(\w{1,3})\b(\s|$))/g,'');
+                            const lines = text.split('\n');
+                            lines.splice(0,1);
+                            const newText = lines.join('\n');
+                            axios.post('http://api.cortical.io:80/rest/text/keywords?retina_name=en_associative', {
+                                body: newText,
+                            }).then(res => {
+                                res.data.map(ngram => {
+                                    let sumOfAll = article.article_score + article.social_score + article.social_speed_sph;
+                                    if (ngram !== "body"
+                                        && ngram !== word
+                                        && ngram !== `${word}s`
+                                        && ngram !== `${word}e`
+                                        && ngram !== "encore"
+                                        && ngram !== "depuis"
+                                        && ngram !== "contre") {
+                                        if (ngram.length > 5) {
+                                            if (tabGram[ngram]) {
+                                                sumOfAll = sumOfAll + tabGram[ngram];
+                                            }
+                                            tabGram[ngram] = sumOfAll;
+                                        }
+                                    }});
+                                this.setState({
+                                    ngrams: tabGram,
+                                    loader: false,
+                                });
+                            });
+                        });
+                })
+            });
     }
     // ngramNumber = (valuengrams) => {
     //     this.setState({
@@ -52,26 +88,8 @@ class SearchPage extends Component {
     //         query: event.target.value
     //     });
     // }
-    componentDidMount() {
-        this.getArticles('https://api.ozae.com/gnw/articles?date=20160601__20180630&key=11116dbf000000000000960d2228e999&query=PSG&hard_limit=20');
-        this.setState({ ngrams: data});
-        //this.setState({valuengrams: 15});
-    }
 
     componentDidUpdate() {
-
-        // fetch('url?query='+this.state.query,{
-        //     method: "GET",
-        //     headers: {
-        //         "Content-type": "application/json"
-        //     },
-        //     body: {
-        //         "param1" : "value1"
-        //     }
-        //
-        // })
-        //     .then((response) =>response.json())
-        //     .then(data => this.setState({articles: data.articles}}}))
 
     }
 
@@ -92,17 +110,24 @@ class SearchPage extends Component {
                     <img src={deco} alt="Clark" className="deco"/>
                     <div className="deconnexion">Deconnexion</div>
                     <>
-                        <input className="input-live"type="text" onChange={this.handlechange} />
+                        <input className="input-live" type="text" value={this.state.value} onChange={this.handleChange} onKeyPress={this.handleEnter} />
                     </>
                     <div className="Bubble">
-                        <BubbleChart
+                        {this.state.loader && <Loader
+                            type="Watch"
+                            color="#00BFFF"
+                            height="100"
+                            width="100"
+                        />}
+
+                        {this.state.ngrams && <BubbleWrapper
                             graph= {{
-                                zoom: 0.7,
-                                offsetX: -0.04,
+                                zoom: 0.6,
+                                offsetX: -0.03,
                                 offsetY: -0.01,
                             }}
-                            width={window.innerWidth=800}
-                            height={window.innerHeight=800}
+                            width={window.innerWidth=850}
+                            height={window.innerHeight=850}
                             fontFamily="Lato"
                             showLegend={false}
                             data={this.state.ngrams}
@@ -112,8 +137,8 @@ class SearchPage extends Component {
                                 color: '#fff',
                                 weight: 'bold',
                             }}
+                            data={this.state.ngrams} limit={this.state.nbrKw}/>}
 
-                        />
                     </div>
 
                 </div>
@@ -124,17 +149,17 @@ class SearchPage extends Component {
                         {/*<p className="compte">Mon compte</p>*/}
                     </div>
                     <div className="ngrams-choice">
-                        <div id="ngrams">15</div>
+                        <div id="ngrams" >{this.state.nbrKw}</div>
                         <p className="keys">Keywords</p>
                         <>
-                            <input type="range" className="ngram-number" onChange={this.ngramNumber} max="30" min="15"
+                            <input type="range" className="ngram-number" value={this.state.nbrKw} onChange={this.handleSlide} max="25" min="10"
                                    step="1"/>
                         </>
                     </div>
 
                     <div className="strategy">
 
-                        <h1 id="strategy">Strategy</h1>
+                        <h1 id="strategy">Strategie</h1>
                         <hr/>
                         <ul>
                             <li><label className="container">
@@ -205,4 +230,4 @@ class SearchPage extends Component {
     }
 }
 
-export default App;
+export default SearchPage;
