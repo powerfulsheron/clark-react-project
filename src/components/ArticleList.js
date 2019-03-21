@@ -21,7 +21,6 @@ class ArticleList extends React.Component {
                 response.data.articles.map(article => {
                     axios.get(`https://api.ozae.com/gnw/article/${article.id}/html_content?key=cb84c941a9894171b2ac4a934c0c0a51`)
                         .then(response => {
-                            let sumOfAll = article.article_score + article.social_score + article.social_speed_sph;
                             const text = response.data.replace(/(\b(\w{1,3})\b(\s|$))/g,'');
                             const lines = text.split('\n');
                             lines.splice(0,1);
@@ -30,6 +29,7 @@ class ArticleList extends React.Component {
                                 body: newText,
                                 }).then(res => {
                                 res.data.map(ngram => {
+                                    let sumOfAll = article.article_score + article.social_score + article.social_speed_sph;
                                     if (ngram !== "body") {
                                         if (ngram.length > 5){
                                             if (tabGram[ngram]){
