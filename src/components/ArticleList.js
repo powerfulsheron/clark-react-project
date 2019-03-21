@@ -70,12 +70,6 @@ class ArticleList extends React.Component {
         return(
             <>
                 <input type="text" value={this.state.value} onChange={this.handleChange} onKeyPress={this.handleEnter} />
-                {/*this.state.loader && <Loader
-                    type="Watch"
-                    color="#00BFFF"
-                    height="100"
-                    width="100"
-                /> */}
                 {this.state.loader && <SuperLoader /> }
                 {this.state.ngrams && <BubbleWrapper data={this.state.ngrams} limit={10}/>}
             </>
