@@ -1,19 +1,34 @@
+body{
+    font-family:"Lato";
+}
+
+.col-left{
+    width: 80%;
+    display: inline-table;
+}
+.sidebar{
+    width: 20%;
+    float: right;
+    display: block;
+}
 .input-live{
 
     border-top-width: 0px;
     border-bottom-width: 2px;
     border-left-width: 0px;
     border-right-width: 0px;
-    width: 30%;
-    height:40%;
+    width: 50%;
+    height:50%;
     font-size: 300%;
     font-weight: 900;
+
+
     /*font-family:"Lato"*/
 }
 .header-logo{
-    width: 15%;
+    width: 80%;
     position: relative;
-    float: left;
+    float: right;
 }
 
 
@@ -114,24 +129,35 @@ input[type=range]:focus::-ms-fill-upper {
 }
 #ngrams{
     position: relative;
-    float:bottom;
     font-size: 600%;
+    opacity: 0.51;
+    color: #a1c7ed;
+    font-weight: 900;
 
 }
 .strategy{
     position: relative;
-
     float: right;
 
 }
+#strategy{
+    /* Style for "Strategy" */
+    opacity: 0.73;
+    color: #6d7278;
+    font-family: Lato;
+    font-size: 250%;
+    font-weight: 400;
+    float:left;
+    margin-bottom: 2%;
+}
 .ngrams-choice{
     position: static;
-    width:20%;
     float: right;
 }
 .Bubble{
     padding-top: 10%;
     display: block;
+    float: right;
 }
 hr{
     /* Style for "Rectangle" */
@@ -145,7 +171,7 @@ hr{
 
 
 .parameters{
-    float:right;
+display: table-row;
 }
 .engagement{
      background-color: #a3c9af;
@@ -153,12 +179,14 @@ hr{
 
 .strategy>ul{
     list-style:none;
+    float: left;
 }
 .parameters>ul{
     list-style:none;
+    float: left;
 }
 .App{
-    margin:5%;
+    margin:2%;
 }
 
 .range1{
@@ -219,4 +247,38 @@ input[type=radio]{
 }
 input[type=radio]:checked{
     background-color: #96deb0;
+}
+input[type=text]{
+    font-family: "Lato";
+    color: #adceef;
+}
+input[type=text]:focus{
+    outline:none;
+}
+
+.deconnexion{
+    float: left;
+    padding-top:0.5%;
+    color: #bab9b5;
+
+}
+.deco{
+    padding-right: 1%;
+    float: left;
+
+}
+.keys{
+    /* Style for "Keywords" */
+    color: #adceef;
+    font-family: "Lato";
+    font-size:150%;
+    font-weight: 900;
+    margin-top: 0.5%;
+    margin-bottom: 0.5%;
+
+}
+.compte{
+    float: right;
+    display: block;
+
 }
