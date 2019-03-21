@@ -155,7 +155,9 @@ input[type=range]:focus::-ms-fill-upper {
     float: right;
 }
 .Bubble{
-    padding-top: 10%;
+
+    padding-top: 1%;
+
     display: block;
     float: right;
 }
@@ -171,10 +173,10 @@ hr{
 
 
 .parameters{
-display: table-row;
+    display: table-row;
 }
 .engagement{
-     background-color: #a3c9af;
+    background-color: #a3c9af;
 }
 
 .strategy>ul{
@@ -198,21 +200,21 @@ display: table-row;
     position: relative;
 }
 .range2{
-     overflow: hidden;
-     width: 133px;
-     height: 18px;
-     border-radius: 10px;
-     background-color: #c1d881;
-     position: relative;
- }
+    overflow: hidden;
+    width: 133px;
+    height: 18px;
+    border-radius: 10px;
+    background-color: #c1d881;
+    position: relative;
+}
 .range3{
-     overflow: hidden;
-     width: 133px;
-     height: 18px;
-     border-radius: 10px;
-     background-color: #f0e676;
-     position: relative;
- }
+    overflow: hidden;
+    width: 133px;
+    height: 18px;
+    border-radius: 10px;
+    background-color: #f0e676;
+    position: relative;
+}
 .range4{
     overflow: hidden;
     width: 133px;
