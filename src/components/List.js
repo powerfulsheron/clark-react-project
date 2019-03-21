@@ -5,14 +5,14 @@ class List extends React.Component {
     render() {
         return(
             <ul>
-                {this.props.data ? this.props.data.map(article =>
+            {this.props.data ? Object.keys(this.props.data).map((key) =>
                     <li>
-                        {article.article_score}
+                        {key} : {this.props.data[key]}
                     </li>
-                ) : null }
-            </ul>
-        );
+            ) : null }
+            </ul>);
+        }
+
     }
-}
 
 export default List;

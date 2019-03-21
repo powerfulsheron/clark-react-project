@@ -6,10 +6,15 @@ class ArticleList extends React.Component {
     state = {
         articles: [],
         ngrams: [],
+        value: '',
     };
 
-    componentDidMount() {
-        axios.get('https://api.ozae.com/gnw/articles?date=20160601__20180630&key=cb84c941a9894171b2ac4a934c0c0a51&query=trump&hard_limit=100')
+    // eslint-disable-next-line
+    handleChange = () => this.setState({value: event.target.value});
+
+
+    findWords(word) {
+        axios.get(`https://api.ozae.com/gnw/articles?date=20160601__20180630&key=cb84c941a9894171b2ac4a934c0c0a51&query=${word}&hard_limit=1000`)
             .then(response => {
             this.setState({articles: response.data.articles});
                 const tabGram = [];
@@ -48,7 +53,11 @@ class ArticleList extends React.Component {
 
     render() {
         return(
-            <List data={this.state.articles} />
+            <>
+                <input type="text" value={this.state.value} onChange={this.handleChange} />
+                <List data={this.state.ngrams} />
+                <button onClick={() => this.findWords(this.state.value)}> eh vasy la </button>
+            </>
         );
     }
 }
