@@ -1,12 +1,14 @@
 import React from 'react';
-import List from './List';
-import axios from 'axios';
 import BubbleWrapper from '../wrapper/BubbleWrapper';
+import axios from 'axios';
+import Loader from 'react-loader-spinner';
+
 class ArticleList extends React.Component {
     state = {
         articles: [],
         ngrams: [],
         value: '',
+        loader: false,
     };
 
 
@@ -15,7 +17,8 @@ class ArticleList extends React.Component {
 
 
     findWords(word) {
-        axios.get(`https://api.ozae.com/gnw/articles?date=20160601__20180630&key=cb84c941a9894171b2ac4a934c0c0a51&query=${word}&hard_limit=100`)
+        this.setState({loader: true});
+        axios.get(`https://api.ozae.com/gnw/articles?date=20160601__20180630&key=cb84c941a9894171b2ac4a934c0c0a51&query=${word}&hard_limit=1000`)
             .then(response => {
             this.setState({articles: response.data.articles});
                 const tabGram = [];
@@ -31,20 +34,24 @@ class ArticleList extends React.Component {
                                 }).then(res => {
                                 res.data.map(ngram => {
                                     let sumOfAll = article.article_score + article.social_score + article.social_speed_sph;
-                                    if (ngram !== "body") {
-                                        if ( ngram !== word) {
+                                    if (ngram !== "body"
+                                        && ngram !== word
+                                        && ngram !== `${word}s`
+                                        && ngram !== `${word}e`
+                                        && ngram !== "encore"
+                                        && ngram !== "depuis"
+                                        && ngram !== "contre") {
                                             if (ngram.length > 5) {
                                                 if (tabGram[ngram]) {
                                                     sumOfAll = sumOfAll + tabGram[ngram];
                                                 }
                                                 tabGram[ngram] = sumOfAll;
                                             }
-                                        }
                                     }});
                                 this.setState({
-                                    ngrams: tabGram
+                                    ngrams: tabGram,
+                                    loader: false,
                                 });
-                                console.log(this.state.ngrams);
                             });
                         });
                 })
@@ -60,6 +67,12 @@ class ArticleList extends React.Component {
             <>
                 <input type="text" value={this.state.value} onChange={this.handleChange} />
                 <button onClick={() => this.findWords(this.state.value)}> eh vasy la </button>
+                {this.state.loader && <Loader
+                    type="Watch"
+                    color="#00BFFF"
+                    height="100"
+                    width="100"
+                />}
                 {this.state.ngrams && <BubbleWrapper data={this.state.ngrams} limit={10}/>}
             </>
         );
