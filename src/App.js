@@ -1,18 +1,13 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import axios from 'axios';
-
+import getArticles from './action/articles';
+import ArticleList from './components/ArticleList';
 class App extends Component {
 
-  getArticles = url => {
-    axios.get(url).then(response => console.log(response));
-    };
 
   componentDidMount() {
-    this.getArticles('https://api.ozae.com/gnw/articles?date=20190317__20190317&edition=fr-fr&key=11116dbf000000000000960d2228e999&hard_limit=50&topic=s');
   }
-
 
   render() {
     return (
@@ -22,6 +17,8 @@ class App extends Component {
           <p>
             Edit <code>src/App.js</code> and save to reload.
           </p>
+          <ul>
+          </ul>
           <a
             className="App-link"
             href="https://reactjs.org"
@@ -30,6 +27,8 @@ class App extends Component {
           >
             Learn React
           </a>
+          <ArticleList/>
+            <button onClick={ () => getArticles(`https://api.ozae.com/gnw/articles?date=20160601__20180630&key=11116dbf000000000000960d2228e999&edition=en-us-ny&query=trump&hard_limit=20`) } type="button"> wesh </button>
         </header>
       </div>
     );
