@@ -155,7 +155,7 @@ input[type=range]:focus::-ms-fill-upper {
     float: right;
 }
 .Bubble{
-    padding-top: 10%;
+    padding-top: 1%;
     display: block;
     float: right;
 }

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import ArticleList from './components/ArticleList';
+import SearchPage from './components/SearchPage';
 
 class App extends Component {
 
@@ -16,7 +17,7 @@ class App extends Component {
                     <h1 className="App-title">Welcome to React</h1>
                 </header>
                 <br />
-                <ArticleList/>
+                <SearchPage/>
             </div>
         );
 
