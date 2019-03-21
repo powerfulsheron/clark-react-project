@@ -12,3 +12,28 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+.lpLabel{
+  color:#494949;
+  font-style: italic;
+}
+
+.lppara{
+  color:#494949;
+  font-size: 20px;
+  font-style: italic;
+}
+
+.lpheader{
+  color:#494949;
+  font-size: 30px;
+  font-weight: 200;
+}
+
+.lpbutton{
+  padding-right: 15px;
+}
+
+.primary{
+  backgroundColor: #6995d7;
+}

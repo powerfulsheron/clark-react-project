@@ -1,5 +1,4 @@
 import React from 'react';
-import List from './List';
 import axios from 'axios';
 import BubbleWrapper from '../wrapper/BubbleWrapper';
 class ArticleList extends React.Component {
