@@ -4,7 +4,7 @@ import App from '../App';
 import Register from '../components/Form/Register';
 import Login from '../components/Form/Login';
 import Search from '../components/SearchPage';
-const About = () => <div>About</div>;
+
 export class Router extends React.Component {
     render() {
         return (
@@ -12,7 +12,6 @@ export class Router extends React.Component {
                 <Route exact path="/" component={App} />
                 <Route exact path="/register" component={Register} />
                 <Route exact path="/login" component={Login} />
-                <Route path="/about" component={About} />
                 <Route path="/search" component={Search} />
             </Switch>
         );
