@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import clark from './images/Logo.svg';
 import {Container,Row,Col} from 'react-bootstrap';
@@ -18,14 +17,14 @@ class App extends React.Component {
                         <br></br>
                     </Col>
                 </Row>
-                <Grid container spacing={20}>
+                <Grid container justify={"center"}>
                     <Grid item xs={2}>
                     </Grid>
-                    <Grid item xs={8 }>
+                    <Grid item xs={8}>
                         <img src={clark} alt="Clark Kent" height="300" width="300"></img>
                     </Grid>
                     <Grid item xs={1}>
-                        <Button variant="contained" style={{
+                        <Button variant="contained" href={'/register'} style={{
                             backgroundColor: "#5CABCC",
                             color:"white",
                             borderRadius:"30px"
@@ -34,7 +33,7 @@ class App extends React.Component {
                         </Button>
                     </Grid>
                     <Grid item xs={1}>
-                        <Button variant="contained" style={{
+                        <Button variant="contained" href={"/login"} style={{
                             backgroundColor: "#44D7B6",
                             color:"white",
                             borderRadius:"30px"
@@ -98,12 +97,12 @@ class App extends React.Component {
                 </Row>
                 <Row>
                     <Col>
-                        <Button variant="contained" className="primary" style={{
+                        <Button variant="contained"  href={'/register'} className="primary" style={{
                             backgroundColor: "#6995d7",
                             color:"white",
                             borderRadius:"30px"
                         }}>
-                            Essayez gratuitement
+                            Essayer gratuitement
                         </Button>
                     </Col>
                 </Row>
