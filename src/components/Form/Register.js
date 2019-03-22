@@ -4,16 +4,43 @@ import Grid from '@material-ui/core/Grid';
 import clark from "../../images/Logo.svg";
 import TextField from '@material-ui/core/TextField';
 import Button from "@material-ui/core/Button/Button";
+import Login from "./Login"
 
 class Register extends React.Component {
-    constructor(props){
-        super(props);
-        this.state={
-            fullname:'',
-            email:'',
-            password:''
+
+    state = {
+        fullname: '',
+        email: '',
+        password:''
+    };
+
+    handleClick(event){
+        var apiBaseUrl = "http://localhost:4000/users";
+        console.log("values",this.state.fullname,this.state.email,this.state.password);
+        var self = this;
+        const config = {
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
         }
+        var payload={
+            fullname: this.state.fullname,
+            email:this.state.email,
+            password:this.state.password
+        }
+        console.log(payload);
+        axios.post(apiBaseUrl+'/register', payload)
+            .then(function (response) {
+                console.log(response);
+                if(response.data.code == 200){
+                    console.log("registration successfull");
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
+
     render() {
         return (
             <div className="App">
@@ -32,12 +59,12 @@ class Register extends React.Component {
                 <Grid container justify={"center"}>
                     <Grid item xs={5}>
                         <TextField
-                            id="standard-full-width"
                             style={{ margin: 8 }}
                             placeholder="Clark Kent"
                             label="Nom"
                             fullWidth
                             margin="normal"
+                            onChange = {(event,newValue) => this.setState({fullname:event.target.value})}
                             InputLabelProps={{
                                 shrink: true,
                             }}
@@ -47,12 +74,12 @@ class Register extends React.Component {
                 <Grid container justify={"center"}>
                     <Grid item xs={5}>
                         <TextField
-                            id="standard-full-width"
                             style={{ margin: 8 }}
                             placeholder="On ne spamme pas, promis"
                             label="Email"
                             fullWidth
                             margin="normal"
+                            onChange = {(event,newValue) => this.setState({email:event.target.value})}
                             InputLabelProps={{
                                 shrink: true,
                             }}
@@ -62,7 +89,6 @@ class Register extends React.Component {
                 <Grid container justify={"center"}>
                     <Grid item xs={5}>
                         <TextField
-                            id="standard-password-input"
                             style={{ margin: 8 }}
                             label="Password"
                             fullWidth
@@ -70,6 +96,7 @@ class Register extends React.Component {
                             InputLabelProps={{
                                 shrink: true,
                             }}
+                            onChange = {(event,newValue) => this.setState({password:event.target.value})}
                             placeholder="Superman"
                             margin="normal"
                         />
@@ -78,7 +105,6 @@ class Register extends React.Component {
                 <Grid container justify={"center"}>
                     <Grid item xs={5}>
                         <TextField
-                            id="standard-password-input"
                             style={{ margin: 8 }}
                             label="Confirmation"
                             fullWidth
@@ -98,7 +124,7 @@ class Register extends React.Component {
                 </Grid>
                 <Grid container justify={"center"}>
                     <Grid item xs={5}>
-                        <Button variant="contained" className="primary" fullWidth style={{
+                        <Button variant="contained" className="primary" href={"/login"} onClick={(event) => this.handleClick(event)} fullWidth style={{
                             backgroundColor: "#6995d7",
                             color:"white",
                             borderRadius:"30px",

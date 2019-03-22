@@ -52,6 +52,7 @@ class Login extends React.Component {
                             placeholder="Promis, on ne regarde pas"
                             label="Password"
                             fullWidth
+                            type="password"
                             margin="normal"
                             InputLabelProps={{
                                 shrink: true,
@@ -78,7 +79,7 @@ class Login extends React.Component {
                 </Grid>
                 <Grid container justify={"center"}>
                     <Grid>
-                        Pas de compte ? <a style={{color:"#6995d7",textDecoration:"none"}} href={"/register"}>C'est ici !</a>
+                        Pas de compte ? <a style={{color:"#6995d7",textDecoration:"none"}} href={"/search"}>C'est ici !</a>
                     </Grid>
                 </Grid>
             </div>
