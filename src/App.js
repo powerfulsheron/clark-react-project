@@ -27,7 +27,7 @@ class App extends React.Component {
                         <Button variant="contained" href={'/register'} style={{
                             backgroundColor: "#5CABCC",
                             color:"white",
-                            borderRadius:"30px"
+                            borderRadius:"5px"
                         }}>
                             Register
                         </Button>
@@ -36,7 +36,7 @@ class App extends React.Component {
                         <Button variant="contained" href={"/login"} style={{
                             backgroundColor: "#44D7B6",
                             color:"white",
-                            borderRadius:"30px"
+                            borderRadius:"5px"
                         }}>
                             Login
                         </Button>
@@ -100,7 +100,7 @@ class App extends React.Component {
                         <Button variant="contained"  href={'/register'} className="primary" style={{
                             backgroundColor: "#6995d7",
                             color:"white",
-                            borderRadius:"30px"
+                            borderRadius:"5px"
                         }}>
                             Essayer gratuitement
                         </Button>

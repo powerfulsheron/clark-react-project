@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import logo from '../logo.svg';
-import clark from '../img/Logo.svg';
 import profil from '../img/profil.png';
 import deco from '../img/3-layers.png';
 import '../App.css';
@@ -8,6 +6,8 @@ import '../style/recherche.css';
 import axios from 'axios';
 import BubbleWrapper from "../wrapper/BubbleWrapper";
 import SuperLoader from "./SuperLoader";
+import LexControl from "./LexControl";
+import Autocomplete from 'react-autocomplete';
 
 
 class SearchPage extends Component {
@@ -17,18 +17,38 @@ class SearchPage extends Component {
         value: '',
         loader: false,
         nbrKw: 10,
-
+        checked: false,
+        zoom: 0.8,
+        isEmpty: false,
+        listKw: [],
     };
 
     // eslint-disable-next-line
     handleChange = () => this.setState({value: event.target.value});
     // eslint-disable-next-line
-    handleSlide = () => this.setState({nbrKw: event.target.value});
+    handleChecked = () => this.setState({checked: event.target.checked});
+    // eslint-disable-next-line
+    handleSlide = () => {this.setState({nbrKw: event.target.value});};
+
     handleEnter = e => {
         if (e.key === 'Enter') {
             this.findWords(this.state.value);
         }
     };
+
+    componentDidMount(){
+        const tabN = [];
+        axios.get('https://api.ozae.com/gnw/ngrams?domain=lemonde.fr&date=20160103__20190109&limit=1000&key=11116dbf000000000000960d2228e999')
+            .then(res => res.data.ngrams.map(ngram => {
+                console.log(this.state.listKw);
+                tabN.push({
+                    id: ngram.ngram,
+                    label: ngram.ngram,
+                });
+            }));
+        this.setState({listKw: tabN});
+        console.log(this.state.listKw);
+    }
 
     findWords(word) {
         this.setState({loader: true});
@@ -47,7 +67,6 @@ class SearchPage extends Component {
                                 body: newText,
                             }).then(res => {
                                 res.data.map(ngram => {
-                                    let sumOfAll = article.article_score + article.social_score + article.social_speed_sph;
                                     if (ngram !== "body"
                                         && ngram !== word
                                         && ngram !== `${word}s`
@@ -56,10 +75,21 @@ class SearchPage extends Component {
                                         && ngram !== "depuis"
                                         && ngram !== "contre") {
                                         if (ngram.length > 5) {
-                                            if (tabGram[ngram]) {
-                                                sumOfAll = sumOfAll + tabGram[ngram];
-                                            }
-                                            tabGram[ngram] = sumOfAll;
+                                            const found = tabGram.some(el => {
+                                                if(el.ngram === ngram){
+                                                    el.articleScore = el.articleScore + article.article_score;
+                                                    el.socialScore = el.socialScore + article.social_score;
+                                                    return true;
+                                                }
+                                            });
+                                                if(!found){
+                                                    tabGram.push({
+                                                        ngram: ngram,
+                                                        articleScore: article.article_score,
+                                                        socialScore: article.social_score,
+                                                    });
+                                                };
+
                                         }
                                     }});
                                 this.setState({
@@ -69,11 +99,7 @@ class SearchPage extends Component {
                             });
                         });
                 })
-            });
-    }
-
-    componentDidUpdate() {
-
+            }).then(() => this.state.articles.length === 0 && this.setState({isEmpty: true}));
     }
 
 
@@ -81,38 +107,56 @@ class SearchPage extends Component {
 
         return (
             <div className="App">
-                <div className="col-left">
+                <div className="col-left animated animatedFadeInUp fadeInUp">
                     <img src={deco} alt="Clark" className="deco"/>
                     <div className="deconnexion">Deconnexion</div>
-                    <>
-                        <input className="input-live" type="text" value={this.state.value} onChange={this.handleChange} onKeyPress={this.handleEnter} />
-                    </>
-                    <div className="Bubble">
-                        {this.state.loader && <SuperLoader /> }
 
+                    {/*<Autocomplete
+                        inputProps={{ style: {
+                                borderTopWidth: '0px',
+                                borderBottom: '1px solid #6d7278',
+                                borderLeftWidth: '0px',
+                                borderRightWidth: '0px',
+                                width: '50%',
+                                height: '50%',
+                                fontSize: '300%',
+                                fontWeight: 900,
+                                fontFamily: "Lato",
+                                color: '#adceef',
+                            }
+                        }}
+                        items={this.state.listKw}
+                        shouldItemRender={(item, value) => item.label.toLowerCase().indexOf(value.toLowerCase()) > -1}
+                        getItemValue={item => item.label}
+                        renderItem={(item, highlighted) =>
+                            <div
+                                key={item.id}
+                                style={{ backgroundColor: highlighted ? '#eee' : 'transparent'}}
+                            >
+                                {item.label}
+                            </div>
+                        }
+                        value={this.state.value}
+                        onChange={this.handleChange}
+                        onKeyPress={this.handleEnter}
+                        onSelect={value => this.setState({ value })}
+                    /> */}
+                    <input className="input-live" type="text" value={this.state.value} onChange={this.handleChange} onKeyPress={this.handleEnter} />
+                    <div className="Bubble">
+                        {this.state.loader && !this.state.isEmpty && <SuperLoader /> }
+                        {this.state.isEmpty && <LexControl/>}
                         {this.state.ngrams && <BubbleWrapper
-                            graph= {{
-                                zoom: 0.6,
-                                offsetX: -0.03,
-                                offsetY: -0.01,
-                            }}
-                            width={window.innerWidth=850}
-                            height={window.innerHeight=850}
-                            fontFamily="Lato"
-                            showLegend={false}
                             data={this.state.ngrams}
-                            labelFont={{
-                                family: 'Lato',
-                                size: 16,
-                                color: '#fff',
-                                weight: 'bold',
-                            }}
-                            data={this.state.ngrams} limit={this.state.nbrKw}/>}
+                            limit={this.state.nbrKw}
+                            setting={this.state.checked}
+                            zoom={this.state.zoom}
+                            findWords={() => this.findWords()}
+                        />}
 
                     </div>
 
                 </div>
-                {this.state.ngrams && <div className="sidebar">
+                {this.state.ngrams && <div className="sidebar animated animatedFadeInUp fadeInUp">
 
                     <div>
                         <img src={profil} alt="Clark" className="header-logo"/>
@@ -120,73 +164,16 @@ class SearchPage extends Component {
                     <div className="ngrams-choice">
                         <div id="ngrams" >{this.state.nbrKw}</div>
                         <p className="keys">Keywords</p>
-                        <>
-                            <input type="range" className="ngram-number" value={this.state.nbrKw} onChange={this.handleSlide} max="25" min="10"
+                            <input type="range" className="ngram-number" value={this.state.nbrKw} onChange={this.handleSlide} max="30" min="5"
                                    step="1"/>
-                        </>
                     </div>
 
                     <div className="strategy">
 
-                        <h1 id="strategy">Strategie</h1>
+                        <h1 id="strategy">Stratégie</h1> <p> (SEO par défaut)</p>
                         <hr/>
-                        <ul>
-                            <li><label className="container">
-                                <input type="radio" name="choice" checked="checked"/>
-                                Social Media
-                            </label>
-                            </li>
-                            <li>
-                                <label className="container">
-                                    <input type="radio" name="choice"/>
-                                    Buzz
-                                </label>
-                            </li>
-                            <li>
-                                <label className="container">
-                                    <input type="radio" name="choice"/>
-                                    SEO
-                                </label>
-                            </li>
-                        </ul>
-                        <div className="parameters">
-                            <p>Advenced parameters…</p>
-                            <hr/>
-                            <>
-                                <ul>
-                                    <li>
-                                        <label>Engagement
-                                            <input type="range" className="range1 engagement"  max="5" min="1"
-                                                   step="1"/>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label>Progation
-                                            <input type="range" className="range2"  max="5" min="1"
-                                                   step="1"/>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label>Densité
-                                            <input type="range" className="range3"  max="5" min="1"
-                                                   step="1"/>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label>Fiabilité
-                                            <input type="range" className="range4"  max="5" min="1"
-                                                   step="1"/>
-                                        </label>
-                                    </li>
-                                    <li>
-                                        <label>Position
-                                            <input type="range" className="range5"  max="5" min="1"
-                                                   step="1"/>
-                                        </label>
-                                    </li>
-                                </ul>
-                            </>
-                        </div>
+                        <input onChange={this.handleChecked} type="checkbox" name="choice"/>
+                        Réseaux Sociaux
                     </div>
                 </div>}
 
