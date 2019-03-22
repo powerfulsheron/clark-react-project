@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import App from '../App';
 import Register from '../components/Form/Register';
 import Login from '../components/Form/Login';
+import Search from '../components/SearchPage';
 const About = () => <div>About</div>;
 export class Router extends React.Component {
     render() {
