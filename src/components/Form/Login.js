@@ -67,7 +67,7 @@ class Login extends React.Component {
                 </Grid>
                 <Grid container justify={"center"}>
                     <Grid item xs={5}>
-                        <Button variant="contained" className="primary" fullWidth style={{
+                            <Button variant="contained" className="primary" fullWidth href={"/search"} style={{
                             backgroundColor: "#44d7b6",
                             color:"white",
                             borderRadius:"30px",
@@ -79,7 +79,7 @@ class Login extends React.Component {
                 </Grid>
                 <Grid container justify={"center"}>
                     <Grid>
-                        Pas de compte ? <a style={{color:"#6995d7",textDecoration:"none"}} href={"/search"}>C'est ici !</a>
+                        Pas de compte ? <a style={{color:"#6995d7",textDecoration:"none"}} href={"/register"}>C'est ici !</a>
                     </Grid>
                 </Grid>
             </div>

@@ -36,7 +36,7 @@ class SearchPage extends Component {
         }
     };
 
-    componentDidMount(){
+   /* componentDidMount(){
         const tabN = [];
         axios.get('https://api.ozae.com/gnw/ngrams?domain=lemonde.fr&date=20160103__20190109&limit=1000&key=11116dbf000000000000960d2228e999')
             .then(res => res.data.ngrams.map(ngram => {
@@ -47,8 +47,7 @@ class SearchPage extends Component {
                 });
             }));
         this.setState({listKw: tabN});
-        console.log(this.state.listKw);
-    }
+    } */
 
     findWords(word) {
         this.setState({loader: true});
@@ -111,7 +110,7 @@ class SearchPage extends Component {
                     <img src={deco} alt="Clark" className="deco"/>
                     <div className="deconnexion">Deconnexion</div>
 
-                    {/*<Autocomplete
+                    {/* <Autocomplete
                         inputProps={{ style: {
                                 borderTopWidth: '0px',
                                 borderBottom: '1px solid #6d7278',
