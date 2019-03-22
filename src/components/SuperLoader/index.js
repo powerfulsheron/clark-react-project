@@ -6,28 +6,29 @@ class SuperLoader extends React.Component {
     render() {
         const styleImage =
             {
-                margin: 'auto',
-                marginTop: '25vh',
-                marginLeft: '25vw',
                 width: '50vw',
+                margin: '0 auto',
+                position: 'relative',
+                top: '100px',
             };
         const styleH1 = {
-            position: "absolute",
-        fontWeight: "300",
-        color:"#494949",
-        fontSize: "20px",
-        /*text-transform: uppercase;*/
-        left: "47%",
-        top: "70%",
-        marginLeft:"-20px",
-        fontFamily: "'Lato', sans-serif",
-        }
+            fontWeight: "300",
+            margin: '0 auto',
+            position: 'relative',
+            top: '100px',
+            color:"#494949",
+            fontSize: "20px",
+            fontFamily: "'Lato', sans-serif",
+        };
+        const span = {
+            zIndex: 1,
+        };
 
         return(
           <>
               <div className="longfazers">
 
-                  <span className=""></span>
+                  <span style={span}></span>
                   <img style={styleImage} src={require("./style/supergif.gif")} alt="" />
 
                   <h1 style={styleH1}>Clark accède à votre requête...</h1>
